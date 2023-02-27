@@ -56,4 +56,13 @@ public class Axis {
 				new Segment(b.getY2(), a.getY1())
 		));
 	}
+
+	public static List<Segment> findSegment(int r, int d, int y0) {
+		if (r > d) return Collections.emptyList();
+
+		int y1 = (int) Math.sqrt(Math.pow(r, 2) - Math.pow(d, 2));
+		int y2 = y0 - y1;
+
+		return List.of(new Segment(y1, y2));
+	}
 }
