@@ -39,7 +39,6 @@ public class Axis {
 		if (b.getY1() <= a.getY1()) {
 			if (a.getY2() <= b.getY2()) // it needs only once
 				return new ArrayList<>(Collections.emptyList());
-
 			if (b.getY2() <= a.getY1())
 				return Collections.singletonList(a);
 			else
@@ -60,9 +59,17 @@ public class Axis {
 	public static List<Segment> findSegment(int r, int d, int y0) {
 		if (r > d) return Collections.emptyList();
 
-		int y1 = (int) Math.sqrt(Math.pow(r, 2) - Math.pow(d, 2));
-		int y2 = y0 - y1;
+		int delta =  (int) Math.ceil(Math.sqrt(Math.pow(r, 2) - Math.pow(d, 2)));
+
+		int y1 = y0 - delta;
+		int y2 = y0 + delta;
 
 		return List.of(new Segment(y1, y2));
+	}
+
+	public static List<Segment> findSegment(int y1, int y2, int d, int r) {
+		if (r > d) return Collections.emptyList();
+		int delta =  (int) Math.ceil(Math.sqrt(Math.pow(r, 2) - Math.pow(d, 2)));
+		return List.of(new Segment((y1 - delta), (y2 + delta)));
 	}
 }
