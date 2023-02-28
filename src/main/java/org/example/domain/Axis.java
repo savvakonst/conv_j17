@@ -18,9 +18,7 @@ public class Axis {
 			Segment currentEl = segments.remove(i);
 			List<Segment> result = calculateDiff(currentEl, a);
 			if (result.size() > 0) {
-				for (int k = result.size() - 1; k >= 0; k--) {
-					segments.addFirst(result.get(k));
-				}
+				segments.addAll(i, result);
 			}
 		}
 	}
