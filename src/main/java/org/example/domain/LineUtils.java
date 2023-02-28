@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
+import org.example.domain.geometry.Coordinate;
+
 
 public class LineUtils {
   //точки по координате X где должен быть установлен центр окружности

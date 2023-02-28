@@ -1,7 +1,7 @@
-package org.example.domain;
+package org.example.domain.geometry;
 
 
-import org.example.domain.Line.LType;
+import org.example.domain.geometry.Line.LType;
 
 import java.util.List;
 import java.util.LinkedList;
@@ -39,7 +39,6 @@ public class SceneState {
 
         axesCoordinates = axesCoordinates_;
         axes = new HashMap<Integer,Axis[]>();
-
 
         borders = borders_;
         

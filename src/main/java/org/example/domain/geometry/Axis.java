@@ -1,4 +1,4 @@
-package org.example.domain;
+package org.example.domain.geometry;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,4 @@
-package org.example.domain;
-
-
+package org.example.domain.geometry;
 
 public class Line {
 
