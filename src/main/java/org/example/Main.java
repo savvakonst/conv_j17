@@ -55,7 +55,7 @@ public class Main {
 			Figure figure = xmlMapper.readValue(content, Figure.class);
 			List<SvgCircle> result = new ArrayList<>();
 			LineUtils lineUtils = new LineUtils();
-			inlets.stream().map(lineUtils::prepareCircles).forEach(result::addAll);
+			inlets.stream().map(lineUtils::prepareSvgCircles).forEach(result::addAll);
 			figure.setCircles(result);
 			writeInFile(figure);
 		} catch (IOException e) {

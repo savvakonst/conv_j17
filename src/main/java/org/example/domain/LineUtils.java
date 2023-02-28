@@ -66,17 +66,17 @@ public class LineUtils {
     }
   }
 
-  public List<Circle> prepareCircles(Inlet inlet) {
+  public List<SvgCircle> prepareSvgCircles(Inlet inlet) {
     calculateAvailablePoints(inlet.getRadius());
     if (availableCoordinates.size() < inlet.getCount()) {
       throw new RuntimeException("The number of shapes exceeds the number of allowed coordinates");
     }
-    List<Circle> result = new ArrayList<>();
+    List<SvgCircle> result = new ArrayList<>();
 
     int inletCount = inlet.getCount();
     while (inletCount >= 1) {
       Coordinate coordinate = availableCoordinates.remove();
-      result.add(new Circle(
+      result.add(new SvgCircle(
           "Circle_" + inletCount,
           inlet,
           Color.GRAY,
