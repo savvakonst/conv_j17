@@ -13,22 +13,59 @@ public class Axis {
 	final int x;
 	private LinkedList<Segment> segments;
 
-	Axis(int x_,Segment defaultSegment ){
-		
+	Axis(int x_, Segment defaultSegment ){
 		x=x_;
-
 		//TODO deternine which is defenitly max and min 
+		segments = new  LinkedList<Segment>();
 		segments.add(defaultSegment);
+	}
+
+	public void addCircleRestriction(int x_, int y, int radius){
+
+		var segment = calcSegment(radius, Math.abs(x_ - x),y);
+		if( segment!=null){
+			modifySegmentsByAnotherSegment(segment);
+		}
+	}
+	
+
+	public void addLineRestriction(int radius, Line line){
+		//System.out.println("("+line.x.p1 + ","+line.x.p2 +")" );
+		switch (line.getType()) {
+			case VERTICAL:{
+				var segment = calcSegment(line.y.p1,line.y.p2,Math.abs(x-line.getXPos()),radius);
+				if( segment!=null)
+					modifySegmentsByAnotherSegment(segment);
+				break;	
+			}
+			case HORIZONTAL:{
+				if (line.x.contains(x)){
+					modifySegmentsByAnotherSegment(new Segment(line.getYPos()-radius,line.getYPos()+ radius));
+				}
+				else {
+					addCircleRestriction(line.x.p1 ,line.y.p1, radius);
+					addCircleRestriction(line.x.p1 ,line.y.p2, radius);
+				} 
+				break;  
+			}
+			default:
+				// TODO throw an arror since OBLIQUE borders is not supported yet 
+				break;
+		}
 	}
 
 
 	public void modifySegmentsByAnotherSegment(Segment a) {
 		for (int i = 0; i < segments.size(); i++) {
-			Segment currentEl = segments.remove(i);
+			Segment currentEl = segments.removeFirst();//remove(0);
 			List<Segment> result = calculateDiff(currentEl, a);
-			if (result.size() > 0) {
-				segments.addAll(i, result);
-			}
+			//if (result.size() > 0) {
+				if (result.size() == 2)System.out.println("size: "+result.size() );
+				segments.addAll( result);
+			//}
+			//else 
+				//segments.add(currentEl);
+			
 		}
 	}
 
@@ -51,24 +88,43 @@ public class Axis {
 		}
 		return new ArrayList<>(List.of(
 				new Segment(a.getP1(), b.getP1()),
-				new Segment(b.getP2(), a.getP1())
+				new Segment(b.getP2(), a.getP2())
 		));
 	}
 
-	public static List<Segment> findSegment(int r, int d, int y0) {
-		if (r > d) return Collections.emptyList();
+
+	public static Segment calcSegment(int r, int d, int y0) {
+		if (r < d) return null;
+		
+		if (d==0) return new Segment(y0-r, y0+r);
+
+		int delta =  (int) Math.ceil(Math.sqrt(Math.pow(r, 2) - Math.pow(d, 2)));
+
+		return new Segment(y0 - delta, y0 + delta);
+	}
+
+	public static Segment calcSegment(int y1, int y2, int d, int r) {
+		if (r < d) return null;
+		int delta =  (int) Math.ceil(Math.sqrt(Math.pow(r, 2) - Math.pow(d, 2)));
+		return new Segment((y1 - delta), (y2 + delta));
+	}
+
+
+	// legcy code
+	public static Segment findSegment(int r, int d, int y0) {
+		if (r < d) return null;
 
 		int delta =  (int) Math.ceil(Math.sqrt(Math.pow(r, 2) - Math.pow(d, 2)));
 
 		int y1 = y0 - delta;
 		int y2 = y0 + delta;
 
-		return List.of(new Segment(y1, y2));
+		return new Segment(y1, y2);
 	}
 
-	public static List<Segment> findSegment(int y1, int y2, int d, int r) {
-		if (r > d) return Collections.emptyList();
+	public static Segment findSegment(int y1, int y2, int d, int r) {
+		if (r < d) return null;
 		int delta =  (int) Math.ceil(Math.sqrt(Math.pow(r, 2) - Math.pow(d, 2)));
-		return List.of(new Segment((y1 - delta), (y2 + delta)));
+		return new Segment((y1 - delta), (y2 + delta));
 	}
 }

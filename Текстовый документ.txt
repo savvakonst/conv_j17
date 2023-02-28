@@ -1,14 +1,18 @@
 Конец X	Конец Y	Начало X	Начало Y
-80.0000	210.0000	10.0000	210.0000
-80.0000	260.0000	80.0000	210.0000
-10.0000	210.0000	10.0000	110.0000
-170.0000	500.0000	170.0000	110.0000
-102.0000	500.0000	170.0000	500.0000
-100.0000	260.0000	80.0000	260.0000
-102.0000	440.0000	10.0000	440.0000
-102.0000	500.0000	102.0000	440.0000
-10.0000	440.0000	10.0000	270.0000
-100.0000	270.0000	100.0000	260.0000
-10.0000	270.0000	100.0000	270.0000
-170.0000	110.0000	10.0000	110.0000
+(\d+).\d+\t(\d+).\d+\t(\d+).\d+\t(\d+).\d+
+$1 $2 $3 $4
+<line x1="$3"  x2="$1"  y1="$4" y2="$2" stroke="black" stroke-dasharray="30 10" />
+
+<line x1="10"  x2="80"  y1="210" y2="210" stroke="black" stroke-dasharray="30 10" />
+<line x1="80"  x2="80"  y1="210" y2="260" stroke="black" stroke-dasharray="30 10" />
+<line x1="10"  x2="10"  y1="110" y2="210" stroke="black" stroke-dasharray="30 10" />
+<line x1="170"  x2="170"  y1="110" y2="500" stroke="black" stroke-dasharray="30 10" />
+<line x1="170"  x2="102"  y1="500" y2="500" stroke="black" stroke-dasharray="30 10" />
+<line x1="80"  x2="100"  y1="260" y2="260" stroke="black" stroke-dasharray="30 10" />
+<line x1="10"  x2="102"  y1="440" y2="440" stroke="black" stroke-dasharray="30 10" />
+<line x1="102"  x2="102"  y1="440" y2="500" stroke="black" stroke-dasharray="30 10" />
+<line x1="10"  x2="10"  y1="270" y2="440" stroke="black" stroke-dasharray="30 10" />
+<line x1="100"  x2="100"  y1="260" y2="270" stroke="black" stroke-dasharray="30 10" />
+<line x1="100"  x2="10"  y1="270" y2="270" stroke="black" stroke-dasharray="30 10" />
+<line x1="10"  x2="170"  y1="110" y2="110" stroke="black" stroke-dasharray="30 10" />
 

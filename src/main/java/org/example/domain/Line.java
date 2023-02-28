@@ -38,7 +38,9 @@ public class Line {
     public int getXPos(){ return x.getP1();}
     public int getYPos(){ return y.getP1();}
 
-
+    public Coordinate getC1(){ return new Coordinate(x.p1,y.p1);}
+    public Coordinate getC2(){ return new Coordinate(x.p2,y.p2);}
 
     public LType getType(){ return t;}
+
 }

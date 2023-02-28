@@ -6,6 +6,16 @@ import lombok.Data;
 @Data
 @Builder
 public class Coordinate {
-  private int x;
-  private int y;
+  final int x;
+  final int y;
+
+  @Override
+    public boolean equals(Object o) {
+      
+        if (!(o instanceof Coordinate)) {
+          return false;
+        }
+        Coordinate c = (Coordinate)o;
+        return x==c.x && y==c.y;
+    }
 }

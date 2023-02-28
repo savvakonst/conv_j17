@@ -1,5 +1,8 @@
 package org.example.domain;
 
+
+import org.example.domain.Line.LType;
+
 import java.util.List;
 import java.util.HashMap;
 
@@ -20,16 +23,17 @@ public class SceneState {
 
     // integer should reflect uniqueness of the inlet (maybe it is quasi radius)
     private final List<Integer> axesCoordinates; 
+
     private HashMap<Integer, Axis[]> axes; 
     
-
     final Line sceneRectangle;
 
-
-     
     public SceneState(List<Integer> axesCoordinates_, List<Line> borders_){
 
         // need to throw error if there are no borders
+
+
+        
         axesCoordinates = axesCoordinates_;
         axes = new HashMap<Integer,Axis[]>();
 
@@ -55,26 +59,39 @@ public class SceneState {
             sceneRectangle = new Line(x_min,y_min,x_max,y_max);
         }   
         
+
+
+
+        
     }
 
-    private  Axis[] addAxis(Circle circle){
+    private  Axis[] addAxis(InletType inletType){
         int numberOfAxles = axesCoordinates.size();
         Axis[] axleSet = new Axis[numberOfAxles];
 
-        for (int i=0; i<numberOfAxles; i++)
-            axleSet[i] = new Axis(axesCoordinates.get(i),sceneRectangle.y);
+        for (int i=0; i<numberOfAxles; i++){
             
+            Axis axis = new Axis(axesCoordinates.get(i),sceneRectangle.y);
+            for (var border: borders)
+                axis.addLineRestriction(inletType.getQuasiRadius(), border);
+            
+            axleSet[i] = axis;            
+        }
+           
         return axleSet;
     }
 
-    public void addCircle(Circle circle){
+    public void addCircle(InletType inletType){
 
-        var r = circle.getQuasiRadius();
-        var axleSet = axes.get(r);
-        if (axleSet != null) 
-            axleSet = addAxis(circle);
+        var r = inletType.getQuasiRadius();
         
-        circles.add(circle);
+        var axleSet = axes.get(r);
+        
+        if (axleSet == null) 
+            axleSet = addAxis(inletType);
+
+        axes.put(r, axleSet);
+        //circles.add(circle);
     }
 
     // returns the diagonal of the scene rectangle. Diagonal from top left to right bottom corner.

@@ -6,9 +6,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Circle {
-    private Coordinate p;
-    private int r;
-    private int gap = 0;
+    private final InletType inletType; 
+    private final Coordinate p;
 
-    public int getQuasiRadius() {return gap+r;} 
+    public int getQuasiRadius() {return inletType.getQuasiRadius();} 
 }
