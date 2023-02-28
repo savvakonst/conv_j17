@@ -45,21 +45,30 @@ public class Main {
 
 			SceneState sceneState = new SceneState(List.of(35, 80, 125/**/), ilines);
 
-			var inletType = new InletType("default inlet", 9, 2);
-			
-			var strategy = new SimpleStrategy();
-			for(int k=0 ; k< 10; k++);
-				sceneState.addCircle(inletType, strategy);
+			var inletType_1 = new InletType("default inlet", 7, 2);
+			var inletType_2 = new InletType(" inlet R17", 30, 2);
+			var inletType_3 = new InletType(" inlet R20", 18, 2);
 
+			var strategy = new SimpleStrategy();
+
+			for(int k=0 ; k< 3; k++)
+				sceneState.addCircle(inletType_2, strategy);
+
+			for(int k=0 ; k< 10; k++)
+				sceneState.addCircle(inletType_3, strategy);
+
+			for(int k=0 ; k< 10; k++)
+			 	sceneState.addCircle(inletType_1, strategy);
+
+			sceneState.getAxesMap().forEach((k, v) -> { 
+				draw(MARKUP_PATH + "\\result_"+k + ".svg",sceneState.getCircles(),v );
+			});
 			
-			draw(MARKUP_PATH + "\\result_" + ".svg",sceneState.getCircles(),null );
-			drawAxis(sceneState);
 
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 
-		// addInlet(Collections.singletonList(new Inlet(20, 20)));
 	}
 
 	private static void draw(String filename, Collection<Circle> circle, Axis []axes) {
@@ -80,7 +89,8 @@ public class Main {
 			
 			if (circle != null) {
 				List<SvgCircle> circleX = new ArrayList<>();
-				circle.forEach(s -> circleX.add(new SvgCircle("",s.getRadius(),s.getP().x, s.getP().y,Color.GRAY)));
+				int id = 0;
+				circle.forEach(s -> circleX.add(new SvgCircle(s.getInletType().getInletName()+" "+id,s.getRadius(),s.getP().x, s.getP().y,Color.GRAY)));
 				figure.setCircles(circleX);
 			}
 
@@ -91,29 +101,6 @@ public class Main {
 		}
 	}
 
-	private static void drawAxis(SceneState sceneState) {
-		try {
-			String content = new String(Files.readAllBytes(Paths.get(MARKUP_PATH + FILE_NAME)));
-			Figure figure = xmlMapper.readValue(content, Figure.class);
-
-			sceneState.getAxesMap().forEach((k, v) -> { // iterate over the map in sceneState
-				List<SvgLine> axisX = new ArrayList<>();
-				Arrays.stream(v).forEach(axis -> { // iterate over the Axis[] - sceneState.map.values
-					// LinkedList<Segment>
-					var segments = axis.getSegments();
-					int x = axis.getX();
-					segments.forEach(s -> axisX.add(new SvgLine(x, x, s.getP1(), s.getP2(), "black", "3", null, null)));
-				});
-				figure.getLines().addAll(axisX);
-				// figure.setLines(axisX);
-
-				writeInFile(figure);
-			});
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 	public static void addInlet(List<Inlet> inlets) {
 		try {
