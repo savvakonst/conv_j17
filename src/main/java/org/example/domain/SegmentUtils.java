@@ -29,22 +29,22 @@ public class SegmentUtils {
 		));
 	}
 
-	public static List<Segment> findSegment(int y0, int leg, int hypotenuse) {
-		if (hypotenuse > leg) return Collections.emptyList();
+	public static List<Segment> findSegment(int r, int d, int y0) {
+		if (r > d) return Collections.emptyList();
 		return Collections.singletonList(
 				Segment.builder()
-						.y1(findY(y0, leg, hypotenuse, true))
-						.y2(findY(y0, leg, hypotenuse, false))
+						.y1(findY(y0, d, r, true))
+						.y2(findY(y0, d, r, false))
 						.build()
 		);
 	}
 
-	public static List<Segment> findSegment(int y1, int y2, int leg, int hypotenuse) {
-		if (hypotenuse > leg) return Collections.emptyList();
+	public static List<Segment> findSegment(int y1, int y2, int d, int r) {
+		if (r > d) return Collections.emptyList();
 		return Collections.singletonList(
 				Segment.builder()
-				.y1(findY(y1, leg, hypotenuse, true))
-				.y2(findY(y2, leg, hypotenuse, false))
+				.y1(findY(y1, d, r, true))
+				.y2(findY(y2, d, r, false))
 				.build()
 		);
 	}
