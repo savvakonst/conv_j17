@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Coordinate {
-  public final  int x;
+  public final int x;
   public final int y;
 
   @Override

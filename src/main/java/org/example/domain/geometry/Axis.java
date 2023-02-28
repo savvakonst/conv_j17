@@ -64,7 +64,8 @@ public class Axis {
 
 
 	public void modifySegmentsByAnotherSegment(Segment a) {
-		for (int i = 0; i < segments.size(); i++) {
+		int  size =segments.size();
+		for (int i = 0; i < size; i++) {
 			Segment currentEl = segments.removeFirst();//remove(0);
 			List<Segment> result = calculateDiff(currentEl, a);
 			segments.addAll( result);

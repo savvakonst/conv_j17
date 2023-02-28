@@ -27,9 +27,10 @@ public class SceneState {
     private final LinkedList<Line> borders;
     private List<Circle> circles;
 
-    // integer should reflect uniqueness of the inlet (maybe it is quasi radius)
+    
     private final List<Integer> axesCoordinates; 
 
+    // integer is a quasi radius
     private HashMap<Integer, Axis[]> axesMap; 
     
     final Line sceneRectangle;
@@ -94,20 +95,21 @@ public class SceneState {
         }
 
         for (var circle: circles)
-            placeCircle(circle,axleSet);
+            placeCircle(circle, inletType.getQuasiRadius(), axleSet);
 
         return axleSet;
     }
 
-    private void placeCircle(Circle circle, Axis[] axleSet){
+    private void placeCircle(Circle circle, int quasiRadius, Axis[] axleSet){
         for(var axis : axleSet)
-            axis.addCircleRestriction(circle.getP(), circle.getQuasiRadius());
+            axis.addCircleRestriction(circle.getP() , circle.getQuasiRadius() + quasiRadius);
     }
 
     private void addCircle(Circle circle){
-         
-        for(var axleSet: axesMap.values())
-            placeCircle(circle,axleSet);
+        axesMap.forEach((quasiRadius, axleSet) -> { 
+            placeCircle(circle, quasiRadius, axleSet);
+        });
+            
 
         circles.add(circle);
     }
