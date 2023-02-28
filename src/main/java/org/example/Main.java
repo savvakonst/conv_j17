@@ -3,8 +3,6 @@ package org.example;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.example.domain.SvgCircle;
 import org.example.domain.Figure;
-import org.example.domain.Inlet;
-import org.example.domain.LineUtils;
 import org.example.domain.SvgLine;
 import org.example.domain.geometry.Axis;
 import org.example.domain.geometry.Circle;
