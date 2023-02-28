@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 @Builder
 public class Coordinate {
-  final int x;
-  final int y;
+  public final  int x;
+  public final int y;
 
   @Override
     public boolean equals(Object o) {

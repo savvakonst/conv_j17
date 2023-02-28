@@ -21,13 +21,19 @@ public class Axis {
 	}
 
 	public void addCircleRestriction(int x_, int y, int radius){
-
 		var segment = calcSegment(radius, Math.abs(x_ - x),y);
 		if( segment!=null){
 			modifySegmentsByAnotherSegment(segment);
 		}
 	}
 	
+	public void addCircleRestriction(Coordinate p, int radius){
+		var segment = calcSegment(radius, Math.abs(p.x - x),p.y);
+		if( segment!=null){
+			modifySegmentsByAnotherSegment(segment);
+		}
+	}
+
 
 	public void addLineRestriction(int radius, Line line){
 		//System.out.println("("+line.x.p1 + ","+line.x.p2 +")" );
@@ -43,8 +49,10 @@ public class Axis {
 					modifySegmentsByAnotherSegment(new Segment(line.getYPos()-radius,line.getYPos()+ radius));
 				}
 				else {
-					addCircleRestriction(line.x.p1 ,line.y.p1, radius);
-					addCircleRestriction(line.x.p1 ,line.y.p2, radius);
+					addCircleRestriction(line.getC1(),radius);
+					addCircleRestriction(line.getC2(),radius);
+					//addCircleRestriction(line.x.p1 ,line.y.p1, radius);
+					//addCircleRestriction(line.x.p1 ,line.y.p2, radius);
 				} 
 				break;  
 			}
@@ -59,13 +67,7 @@ public class Axis {
 		for (int i = 0; i < segments.size(); i++) {
 			Segment currentEl = segments.removeFirst();//remove(0);
 			List<Segment> result = calculateDiff(currentEl, a);
-			//if (result.size() > 0) {
-				if (result.size() == 2)System.out.println("size: "+result.size() );
-				segments.addAll( result);
-			//}
-			//else 
-				//segments.add(currentEl);
-			
+			segments.addAll( result);
 		}
 	}
 
@@ -110,21 +112,13 @@ public class Axis {
 	}
 
 
-	// legcy code
-	public static Segment findSegment(int r, int d, int y0) {
-		if (r < d) return null;
 
-		int delta =  (int) Math.ceil(Math.sqrt(Math.pow(r, 2) - Math.pow(d, 2)));
 
-		int y1 = y0 - delta;
-		int y2 = y0 + delta;
 
-		return new Segment(y1, y2);
-	}
+	public Segment getLeastSegment(){
+		if (segments.isEmpty())
+			return null;
 
-	public static Segment findSegment(int y1, int y2, int d, int r) {
-		if (r < d) return null;
-		int delta =  (int) Math.ceil(Math.sqrt(Math.pow(r, 2) - Math.pow(d, 2)));
-		return new Segment((y1 - delta), (y2 + delta));
+		return segments.getFirst(); 
 	}
 }

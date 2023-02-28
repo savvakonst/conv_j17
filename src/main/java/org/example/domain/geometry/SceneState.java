@@ -1,11 +1,12 @@
 package org.example.domain.geometry;
 
 
-import org.example.domain.geometry.Line.LType;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 
@@ -29,19 +30,22 @@ public class SceneState {
     // integer should reflect uniqueness of the inlet (maybe it is quasi radius)
     private final List<Integer> axesCoordinates; 
 
-    private HashMap<Integer, Axis[]> axes; 
+    private HashMap<Integer, Axis[]> axesMap; 
     
     final Line sceneRectangle;
 
-    public SceneState(List<Integer> axesCoordinates_, LinkedList<Line> borders_){
 
-        // need to throw error if there are no borders
 
-        axesCoordinates = axesCoordinates_;
-        axes = new HashMap<Integer,Axis[]>();
+    public SceneState(final List<Integer> axesCoordinates_, LinkedList<Line> borders_){
 
-        borders = borders_;
-        
+        // TODO need to throw error if there are no borders
+
+        circles = new ArrayList<Circle>();
+        axesMap = new HashMap<Integer,Axis[]>();
+
+
+        axesCoordinates = axesCoordinates_.stream().sorted().collect(Collectors.toList());
+        borders = new LinkedList<>(borders_);
         { 
             var b = borders.get(0);
             int x_max=b.x.p2, x_min =b.x.p1, y_max=b.y.p2,y_min=b.y.p1;
@@ -83,23 +87,45 @@ public class SceneState {
 
             }
 
-            axleSet[i] = axis;            
+
+
+            axleSet[i] = axis;       
+
         }
-           
+
+        for (var circle: circles)
+            placeCircle(circle,axleSet);
+
         return axleSet;
     }
 
-    public void addCircle(InletType inletType){
+    private void placeCircle(Circle circle, Axis[] axleSet){
+        for(var axis : axleSet)
+            axis.addCircleRestriction(circle.getP(), circle.getQuasiRadius());
+    }
+
+    private void addCircle(Circle circle){
+         
+        for(var axleSet: axesMap.values())
+            placeCircle(circle,axleSet);
+
+        circles.add(circle);
+    }
+
+    public void addCircle(InletType inletType, PlacementStrategyIfs plStrategy){
 
         var r = inletType.getQuasiRadius();
         
-        var axleSet = axes.get(r);
+        var axleSet = axesMap.get(r);
         
         if (axleSet == null) 
             axleSet = addAxis(inletType);
 
-        axes.put(r, axleSet);
-        //circles.add(circle);
+        axesMap.put(r, axleSet);
+        var circle = plStrategy.place(inletType, axleSet);
+        // TODO to add check. if circle is null, placement is impossible, since there are no free place fo this radius. 
+        addCircle(circle);
+        
     }
 
     // returns the diagonal of the scene rectangle. Diagonal from top left to right bottom corner.

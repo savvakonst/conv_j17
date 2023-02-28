@@ -25,6 +25,14 @@ public class SvgCircle {
   @JacksonXmlProperty(isAttribute = true, localName = "fill")
   private String color;
 
+  public SvgCircle(String id, int radius ,  Integer cx, Integer cy, Color color) {
+    this.id = id;
+    this.color = "#" + Integer.toHexString(color.getRGB()).substring(2);
+    this.radius =radius;
+    this.cx = cx;
+    this.cy = cy;
+  }
+
   public SvgCircle(String id, Inlet inlet, Color color, Integer cx, Integer cy) {
     this.id = id;
     this.color = "#" + Integer.toHexString(color.getRGB()).substring(2);
