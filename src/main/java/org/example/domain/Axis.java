@@ -24,23 +24,23 @@ public class Axis {
 	}
 
 	public static List<Segment> calculateDiff(Segment a, Segment b) {
-		if (b.getY1() <= a.getY1()) {
-			if (a.getY2() <= b.getY2()) // it needs only once
+		if (b.y1 <= a.y1) {
+			if (a.y2 <= b.y2) // it needs only once
 				return new ArrayList<>(Collections.emptyList());
-			if (b.getY2() <= a.getY1())
+			if (b.y2 <= a.y1)
 				return Collections.singletonList(a);
 			else
-				return new ArrayList<>(Collections.singletonList(new Segment(b.getY2(), a.getY2())));
+				return new ArrayList<>(Collections.singletonList(new Segment(b.y2, a.y2)));
 		}
-		if (a.getY2() <= b.getY2()) {
-			if (a.getY2() <= b.getY1())
+		if (a.y2 <= b.y2) {
+			if (a.y2 <= b.y1)
 				return Collections.singletonList(a);
 			else
-				return new ArrayList<>(Collections.singletonList(new Segment(a.getY1(), b.getY1())));
+				return new ArrayList<>(Collections.singletonList(new Segment(a.y1, b.y1)));
 		}
 		return new ArrayList<>(List.of(
-				new Segment(a.getY1(), b.getY1()),
-				new Segment(b.getY2(), a.getY1())
+				new Segment(a.y1, b.y1),
+				new Segment(b.y2, a.y1)
 		));
 	}
 
@@ -62,10 +62,10 @@ public class Axis {
 	}
 
 	//	public static List<Segment> calculateDiff(Segment seg1, Segment seg2) {
-//		int x1 = seg1.getY1();
-//		int x2 = seg1.getY2();
-//		int y1 = seg2.getY1();
-//		int y2 = seg2.getY2();
+//		int x1 = seg1.y1;
+//		int x2 = seg1.y2;
+//		int y1 = seg2.y1;
+//		int y2 = seg2.y2;
 //
 //		if (x1 == y1) {
 //			if (x2 == y2) return Collections.singletonList(new Segment(y2, x2));
