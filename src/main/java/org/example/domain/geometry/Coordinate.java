@@ -1,9 +1,9 @@
 package org.example.domain.geometry;
 
 import lombok.Builder;
-import lombok.Data;
 
-@Data
+
+
 @Builder
 public class Coordinate {
   public final int x;

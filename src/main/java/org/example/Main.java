@@ -12,7 +12,7 @@ import org.example.domain.geometry.InletType;
 import org.example.domain.geometry.Line;
 import org.example.domain.geometry.SceneState;
 import org.example.domain.geometry.SimpleStrategy;
-import org.example.domain.geometry.Coordinate;
+
 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -43,14 +43,27 @@ public class Main {
 			for (var l : lines)
 				ilines.add(new Line(l.getX1(), l.getY1(), l.getX2(), l.getY2()));
 
+
+
+
 			SceneState sceneState = new SceneState(List.of(35, 80, 125/**/), ilines);
 
+
+
+			// creating inlet types 
 			var inletType_1 = new InletType("default inlet", 7, 2);
 			var inletType_2 = new InletType(" inlet R17", 30, 2);
 			var inletType_3 = new InletType(" inlet R20", 18, 2);
 
+
+			/// also you can create another placement strategy, you need just to implement PlacementStrategyIfs. 
+			/// current strategy is the simpliest, i foresee another one simple (simple to implement and understand) strategy. 
+			/// But i'm too lazy for implementing it. 
+			/// 
 			var strategy = new SimpleStrategy();
 
+
+			// by choosing order of insertion inlet you can control their placement
 			for(int k=0 ; k< 3; k++)
 				sceneState.addCircle(inletType_2, strategy);
 
@@ -102,21 +115,6 @@ public class Main {
 	}
 
 
-	public static void addInlet(List<Inlet> inlets) {
-		try {
-			String content = new String(Files.readAllBytes(Paths.get(MARKUP_PATH + FILE_NAME)));
-			Figure figure = xmlMapper.readValue(content, Figure.class);
-			List<SvgCircle> result = new ArrayList<>();
-			LineUtils lineUtils = new LineUtils();
-			inlets.stream().map(lineUtils::prepareSvgCircles).forEach(result::addAll);
-			figure.setCircles(result);
-
-			writeInFile(figure);
-
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
 
 	private static void writeInFile(String fname, Figure figure ) {
 		try (FileWriter writer = new FileWriter(fname, false)) {
@@ -128,7 +126,3 @@ public class Main {
 		}
 	}
 
-	private static void writeInFile(Figure figure) {
-		writeInFile(MARKUP_PATH + "\\result" + ".svg",figure);
-	}
-}

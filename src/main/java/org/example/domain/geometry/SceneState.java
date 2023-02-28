@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.LinkedList;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 
@@ -87,9 +86,7 @@ public class SceneState {
                     itr.remove();
 
             }
-
-
-
+            
             axleSet[i] = axis;       
 
         }
@@ -114,7 +111,7 @@ public class SceneState {
         circles.add(circle);
     }
 
-    public void addCircle(InletType inletType, PlacementStrategyIfs plStrategy){
+    public boolean addCircle(InletType inletType, PlacementStrategyIfs plStrategy){
 
         var r = inletType.getQuasiRadius();
         
@@ -125,14 +122,10 @@ public class SceneState {
 
         axesMap.put(r, axleSet);
         var circle = plStrategy.place(inletType, axleSet);
-        // TODO to add check. if circle is null, placement is impossible, since there are no free place fo this radius. 
+        // TODO to add check. if circle is null, then placement is impossible, since there are no free place for this radius. 
         addCircle(circle);
-        
+        return true;
     }
 
     // returns the diagonal of the scene rectangle. Diagonal from top left to right bottom corner.
-    public void getSceneRectangle(Circle circle){
-        
-    }
-
 }

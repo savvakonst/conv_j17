@@ -1,0 +1,18 @@
+<svg width="400" height="600" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <line x1="10"  x2="70"  y1="210" y2="210" stroke="black" stroke-dasharray="30 10" />
+    <line x1="70"  x2="70"  y1="210" y2="260" stroke="black" stroke-dasharray="30 10" />
+    <line x1="10"  x2="10"  y1="110" y2="210" stroke="black" stroke-dasharray="30 10" />
+    <line x1="170"  x2="170"  y1="110" y2="500" stroke="black" stroke-dasharray="30 10" />
+    <line x1="170"  x2="102"  y1="500" y2="500" stroke="black" stroke-dasharray="30 10" />
+    <line x1="70"  x2="100"  y1="260" y2="260" stroke="black" stroke-dasharray="30 10" />
+    <line x1="10"  x2="102"  y1="440" y2="440" stroke="black" stroke-dasharray="30 10" />
+    <line x1="102"  x2="102"  y1="440" y2="500" stroke="black" stroke-dasharray="30 10" />
+    <line x1="10"  x2="10"  y1="270" y2="440" stroke="black" stroke-dasharray="30 10" />
+    <line x1="100"  x2="100"  y1="260" y2="270" stroke="black" stroke-dasharray="30 10" />
+    <line x1="100"  x2="10"  y1="270" y2="270" stroke="black" stroke-dasharray="30 10" />
+    <line x1="10"  x2="170"  y1="110" y2="110" stroke="black" stroke-dasharray="30 10" />
+
+
+
+</svg>

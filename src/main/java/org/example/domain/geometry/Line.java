@@ -1,5 +1,6 @@
 package org.example.domain.geometry;
 
+
 public class Line {
 
     public enum LType
@@ -21,7 +22,7 @@ public class Line {
 
         if (x1==x2)
             // if (y1==y2)
-            // it might be better to throw an error if y1==y1, for preventing situations when line becomes a point
+            // TODO it might be better to throw an error if y1==y1, for preventing situations when line becomes a point
             t = LType.VERTICAL;
         else if (y1==y2)
             t = LType.HORIZONTAL;

@@ -82,8 +82,8 @@ public class LineUtils {
           "Circle_" + inletCount,
           inlet,
           Color.GRAY,
-          coordinate.getX(),
-          coordinate.getY()
+          coordinate.x,
+          coordinate.y
       ));
       inletCount--;
     }
