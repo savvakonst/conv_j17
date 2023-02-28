@@ -22,6 +22,8 @@ public class SvgLine {
   private int y2;
   @JacksonXmlProperty(isAttribute = true)
   private String stroke;
+  @JacksonXmlProperty(isAttribute = true, localName = "stroke-dasharray")
+  private String stroke_dasharray;
   @JacksonXmlProperty(isAttribute = true, localName = "marker-start")
   private Marker markerStart;
   @JacksonXmlProperty(isAttribute = true, localName = "marker-end")
