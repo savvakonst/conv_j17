@@ -1,25 +1,51 @@
 package org.example;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import org.example.domain.Circle;
+import org.example.domain.SvgCircle;
 import org.example.domain.Figure;
 import org.example.domain.Inlet;
 import org.example.domain.LineUtils;
+import org.example.domain.SvgLine;
 
+//
+import org.example.domain.Line;
+import org.example.domain.SceneState;
+
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
 
 public class Main {
-	private static final String MARKUP_PATH = "C:\\Users\\al20i\\Desktop\\ivan\\svg";
+	private static final String MARKUP_PATH = "D:\\java_projects\\conv_j17";
 	private static final String FILE_NAME = "\\example.svg";
 	private static final XmlMapper xmlMapper = new XmlMapper();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
+
+
+		try {
+			String content = new String(Files.readAllBytes(Paths.get(MARKUP_PATH + FILE_NAME)));
+			Figure figure = xmlMapper.readValue(content, Figure.class);
+			Collection<SvgLine>  lines = figure.getLines();
+			List<Line> ilines = new ArrayList<>();
+			for(var l: lines)
+				ilines.add(new Line(l.getX1(),l.getY1(),l.getX2(),l.getY2()));
+			
+
+			//SceneState sceneState = new SceneState(ilines);
+
+
+
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
 		addInlet(Collections.singletonList(new Inlet(20, 20)));
 	}
 
@@ -27,9 +53,9 @@ public class Main {
 		try {
 			String content = new String(Files.readAllBytes(Paths.get(MARKUP_PATH + FILE_NAME)));
 			Figure figure = xmlMapper.readValue(content, Figure.class);
-			List<Circle> result = new ArrayList<>();
+			List<SvgCircle> result = new ArrayList<>();
 			LineUtils lineUtils = new LineUtils();
-			inlets.stream().map(lineUtils::prepareCircles).forEach(result::addAll);
+			inlets.stream().map(lineUtils::prepareSvgCircles).forEach(result::addAll);
 			figure.setCircles(result);
 			writeInFile(figure);
 		} catch (IOException e) {
@@ -39,6 +65,7 @@ public class Main {
 
 
 	private static void writeInFile(Figure figure) {
+
 		try (FileWriter writer = new FileWriter(MARKUP_PATH + "\\result.svg", false)) {
 			String result = xmlMapper.writeValueAsString(figure);
 			writer.write(result);

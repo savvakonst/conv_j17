@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -27,8 +28,8 @@ public class Figure {
   private String viewBox;
   @JacksonXmlElementWrapper(useWrapping = false)
   @JacksonXmlProperty(localName = "line")
-  private Collection<SvgLine> lines;
+  private List<SvgLine> lines;
   @JacksonXmlElementWrapper(useWrapping = false)
   @JacksonXmlProperty(localName = "circle")
-  private Collection<Circle> circles;
+  private Collection<SvgCircle> circles;
 }

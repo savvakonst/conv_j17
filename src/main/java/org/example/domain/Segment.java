@@ -5,7 +5,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
+
 public class Segment {
-	final int y1;
-	final int y2;
+	final int p1;
+	final int p2;
 }
