@@ -9,6 +9,7 @@ import java.util.*;
 @Data
 @AllArgsConstructor
 public class Axis {
+
 	final int x;
 	private LinkedList<Segment> segments;
 
@@ -70,7 +71,4 @@ public class Axis {
 		int delta =  (int) Math.ceil(Math.sqrt(Math.pow(r, 2) - Math.pow(d, 2)));
 		return List.of(new Segment((y1 - delta), (y2 + delta)));
 	}
-
-	
-
 }
