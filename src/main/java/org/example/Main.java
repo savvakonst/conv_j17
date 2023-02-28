@@ -68,7 +68,7 @@ public class Main {
 			for(int k=0 ; k< 10; k++)
 				sceneState.addCircle(inletType_3, strategy);
 
-			for(int k=0 ; k< 10; k++)
+			for(int k=0 ; k< 12; k++)
 			 	sceneState.addCircle(inletType_1, strategy);
 
 			sceneState.getAxesMap().forEach((k, v) -> { 
