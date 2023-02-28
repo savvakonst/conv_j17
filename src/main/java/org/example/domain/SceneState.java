@@ -4,7 +4,12 @@ package org.example.domain;
 import org.example.domain.Line.LType;
 
 import java.util.List;
+import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.HashMap;
+
+
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +23,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SceneState {
-    private final List<Line> borders;
+    private final LinkedList<Line> borders;
     private List<Circle> circles;
 
     // integer should reflect uniqueness of the inlet (maybe it is quasi radius)
@@ -28,21 +33,12 @@ public class SceneState {
     
     final Line sceneRectangle;
 
-    public SceneState(List<Integer> axesCoordinates_, List<Line> borders_){
+    public SceneState(List<Integer> axesCoordinates_, LinkedList<Line> borders_){
 
         // need to throw error if there are no borders
 
-
-        
         axesCoordinates = axesCoordinates_;
         axes = new HashMap<Integer,Axis[]>();
-
-        borders_.sort(
-            (a,b)->( 
-                (a.getXPos() == b.getXPos()) ? 
-                (a.getYPos() - b.getYPos())  : 
-                (a.getXPos() - b.getXPos())
-            ));
 
 
         borders = borders_;
@@ -59,10 +55,6 @@ public class SceneState {
             sceneRectangle = new Line(x_min,y_min,x_max,y_max);
         }   
         
-
-
-
-        
     }
 
     private  Axis[] addAxis(InletType inletType){
@@ -75,6 +67,23 @@ public class SceneState {
             for (var border: borders)
                 axis.addLineRestriction(inletType.getQuasiRadius(), border);
             
+            // removing outside lines
+            
+            var itr = axis.getSegments().listIterator();
+            while (itr.hasNext()){
+                var segment = itr.next();
+                var y = segment.getP1();
+                var x = axis.x;
+                int intersection_counter = 0;
+                for (var border: borders)
+                    if (border.getType()==Line.LType.VERTICAL && border.getXPos() < x)
+                        if ( border.y.contains(y)) intersection_counter++;
+                
+                if((intersection_counter&1) == 0)
+                    itr.remove();
+
+            }
+
             axleSet[i] = axis;            
         }
            
