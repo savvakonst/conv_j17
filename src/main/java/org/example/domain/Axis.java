@@ -10,7 +10,7 @@ import java.util.*;
 @AllArgsConstructor
 public class Axis {
 	final int x;
-	private List<Segment> segments;
+	private LinkedList<Segment> segments;
 
 	Axis(int x_,Segment defaultSegment ){
 		
@@ -19,6 +19,18 @@ public class Axis {
 		//TODO deternine which is defenitly max and min 
 		segments.add(defaultSegment);
 	}
+
+
+	public void modifySegmentsByAnotherSegment(Segment a) {
+		for (int i = 0; i < segments.size(); i++) {
+			Segment currentEl = segments.remove(i);
+			List<Segment> result = calculateDiff(currentEl, a);
+			if (result.size() > 0) {
+				segments.addAll(i, result);
+			}
+		}
+	}
+
 
 	public static List<Segment> calculateDiff(Segment a, Segment b) {
 		if (b.getP1() <= a.getP1()) {

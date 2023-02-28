@@ -38,8 +38,9 @@ public class Main {
 				ilines.add(new Line(l.getX1(),l.getY1(),l.getX2(),l.getY2()));
 			
 
-			//SceneState sceneState = new SceneState(ilines);
+			SceneState sceneState = new SceneState(List.of(35,80,125),ilines);
 
+			
 
 
 		} catch (IOException e) {

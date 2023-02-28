@@ -57,7 +57,7 @@ public class SceneState {
         
     }
 
-    public  Axis[] addAxis(Circle circle){
+    private  Axis[] addAxis(Circle circle){
         int numberOfAxles = axesCoordinates.size();
         Axis[] axleSet = new Axis[numberOfAxles];
 
